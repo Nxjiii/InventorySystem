@@ -20,6 +20,6 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('Signup/', views.signup , name='signup')
-  
+    path('Admin/', views.Admin , name='Admin'),
+    path('User/', views.User , name='User')
 ]

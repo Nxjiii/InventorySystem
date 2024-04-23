@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.admin', #admin interface
     'django.contrib.auth', #Authentacting users
     'django.contrib.contenttypes',
+    'django.contrib.sessions',
     'django.contrib.messages', #displaying one-time notifications to user
     'django.contrib.staticfiles',
     'InventorySystem',

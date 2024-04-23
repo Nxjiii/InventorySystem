@@ -19,8 +19,14 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
+<<<<<<< HEAD
     path('admin/', admin.site.urls),
     path('Signup/', views.signup , name='signup')
     
+=======
+    path('Admin/', admin.site.urls),
+    path('AdminDash/', views.AdminDash , name='AdminDash'),
+    path('User/', views.User , name='User')
+>>>>>>> db4ba225966dab91e221b73f106932c2543d8e24
 ]
 

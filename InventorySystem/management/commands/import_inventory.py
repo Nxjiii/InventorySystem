@@ -20,7 +20,17 @@ class Command(BaseCommand):
         with open(csv_file, 'r', newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
 
+                     #debug lines
+                        # Print the fieldnames
+            print("Fieldnames:", reader.fieldnames)
 
+            # Iterate over each row in the CSV file
+            for row in reader:
+
+                # Print row to inspect its contents
+                print("Row:", row)
+
+                    #//
 
 
 

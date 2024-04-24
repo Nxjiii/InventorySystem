@@ -22,4 +22,6 @@ urlpatterns = [
     path('Admin/', admin.site.urls),
     path('AdminDash/', views.AdminDash , name='AdminDash'),
     path('User/', views.User , name='User')
+
 ]
+

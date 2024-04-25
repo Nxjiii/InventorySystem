@@ -25,7 +25,7 @@ class Hire_Reference(models.Model):
 class Hardware(models.Model):
     HardwareID = models.IntegerField()
     DeviceName = models.CharField(null = False, max_length=200)
-    DeviceType = models.CharField(null= False, max_length=100)
+    DeviceType = models.CharField(null= False, max_length=100, default="DeviceType")
     Quantity = models.IntegerField()
     Audit = models.DateField(null = False, max_length=100)
     Location = models.CharField(null = False, max_length=200)

@@ -24,15 +24,15 @@ class Hire_Reference(models.Model):
 
 class Hardware(models.Model):
     HardwareID = models.IntegerField()
-    DeviceName = models.CharField(max_length=200)
-    DeviceType = models.CharField(max_length=100)
+    DeviceName = models.CharField(null = False, max_length=200)
+    DeviceType = models.CharField(null= False, max_length=100)
     Quantity = models.IntegerField()
-    Audit = models.DateField(max_length=100)
-    Location = models.CharField(max_length=200)
+    Audit = models.DateField(null = False, max_length=100)
+    Location = models.CharField(null = False, max_length=200)
     Status = models.CharField(max_length=100)
     Warranty = models.CharField(max_length=100)
-    Comments = models.TextField(max_length=1000)
-    OnOffSite = models.CharField(max_length=100)
+    Comments = models.TextField(null = True, max_length=1000)
+    OnOffSite = models.CharField(null = True, max_length=100)
     RefID = models.IntegerField()
 
 class NonElectronic_Hardware(models.Model):

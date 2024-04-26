@@ -40,6 +40,7 @@ class NonElectronic_Hardware(models.Model):
 
 
 class Electronic_Hardware(models.Model):
+    DeviceType = models.CharField( null=True, max_length=100, default="DeviceType")
     HardwareID = models.IntegerField()
     DeviceSerial = models.CharField(max_length=100)
     CPU = models.CharField(max_length=100)

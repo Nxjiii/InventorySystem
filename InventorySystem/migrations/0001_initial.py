@@ -36,6 +36,7 @@ class Migration(migrations.Migration):
                 ('Comments', models.TextField(max_length=1000)),
                 ('OnOffSite', models.CharField(max_length=100)),
                 ('RefID', models.IntegerField()),
+                ('DeviceType', models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(

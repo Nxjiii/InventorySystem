@@ -8,5 +8,5 @@ def LoginRegister(request):
 def User(request):
     return render(request, 'InventorySystem/UserTemplate.HTML')
 
-def Admin(request):
+def AdminHomepage(request):
     return render(request, 'InventorySystem/AdminHomepage.HTML')

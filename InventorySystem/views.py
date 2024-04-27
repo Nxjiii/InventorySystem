@@ -10,3 +10,12 @@ def User(request):
 
 def AdminHomepage(request):
     return render(request, 'InventorySystem/AdminHomepage.HTML')
+
+def AdminInventory(request):
+    return render(request, 'InventorySystem/AdminInventory.HTML')
+
+def AdminManage(request):
+    return render(request, 'InventorySystem/AdminManage.HTML')
+
+def AdminBookings(request):
+    return render(request, 'InventorySystem/AdminBookings.HTML')

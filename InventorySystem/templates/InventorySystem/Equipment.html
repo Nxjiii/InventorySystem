@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Page</title>
+    
+</head>
+<body>
+    <h1>Equipment Page</h1> 
+
+    <!-- Filter options -->
+    <form method="GET" action="{% url 'equipment_list' %}">
+        <label for="availability">Availability:</label>
+        <select name="availability" id="availability">
+            <option value="">All</option>
+            <option value="available">Available</option>
+            <option value="unavailable">Unavailable</option>
+        </select>
+
+        <!-- Sort by -->
+        <label for="sort_by">Sort by:</label>
+        <select name="sort_by" id="sort_by">
+            <option value="device_name">Device Name</option>
+            <option value="quantity">Quantity</option>
+            
+        </select>
+
+        <!-- Search box -->
+        <label for="search">Search:</label>
+        <input type="text" name="search" id="search" placeholder="Search...">
+
+        <button type="submit">Apply Filters</button>
+    </form>
+
+    <!-- Equipment list table -->
+    <table class="equipment-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Device Name</th>
+                <th>Quantity</th>
+                <th>Audit</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Warranty</th>
+                <th>Comments</th>
+                <th>On/Off Site</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hardware in hardware_list %}
+                <tr>
+                    <td>{{ hardware.HardwareID }}</td>
+                    <td>{{ hardware.DeviceName }}</td>
+                    <td>{{ hardware.Quantity }}</td>
+                    <td>{{ hardware.Audit }}</td>
+                    <td>{{ hardware.Location }}</td>
+                    <td>{{ hardware.Status }}</td>
+                    <td>{{ hardware.Warranty }}</td>
+                    <td>{{ hardware.Comments }}</td>
+                    <td>{{ hardware.OnOffSite }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <style>
+        /* Styles for table */
+.equipment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; 
+}
+
+.equipment-table th, .equipment-table td {
+    border: 1px solid #c2b8b8;
+    padding: 10px;
+}
+
+.equipment-table th {
+    background-color: #494646;
+    color: #ffffff; 
+    text-align: left;
+}
+
+.equipment-table td {
+    background-color: #f9f9f9; 
+}
+
+
+
+.equipment-table th,
+.equipment-table td {
+    padding: 12px;
+}
+
+
+
+
+
+
+
+/* Filter button styles */
+button {
+    background-color: #808a81;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #000000;
+}
+
+
+
+.content h1 {
+    font-size: 24px; 
+    margin-bottom: 10px; 
+}
+
+.content p {
+    font-size: 16px; 
+    line-height: 1.5; 
+}
+    </style>
+
+</body>
+</html>

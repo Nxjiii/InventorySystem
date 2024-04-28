@@ -47,4 +47,5 @@ class Electronic_Hardware(models.Model):
     CPU = models.CharField(max_length=100)
     GPU = models.CharField(max_length=100)
     RAM = models.CharField(max_length=100)
-    
+    Status = models.CharField(null=True, max_length=100, default= 'Status')
+    Quantity = models.IntegerField( null=True, default= 0)

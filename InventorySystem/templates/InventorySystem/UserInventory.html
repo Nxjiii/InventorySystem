@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+    <head>
+<meta charset="UTF-8">
+<meta name="author" content="Group Project"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Inventory </title>
+    </head>
+    <body>
+
+
+        <nav>
+            
+
+    <div class="navbar">
+
+
+        <div class="name">
+            <a href="Homepage.html">Inventory</a>
+        </div>
+               
+        
+   
+        <ul class="navlinks">
+           <li><a href="Manage.html">Manage</a></li>
+           <li><a href="Help.html">Help</a></li>  
+           <li><a href="Profile.html">Profile</a></li>  
+
+        </ul>  
+    </div>   
+</nav>       
+
+<h2> Browse items</h2>
+
+<div class="wrapper">
+
+
+    <div id="search-container">
+        <input type="search" id="search-output" placeholder="Browse Inventory">
+        <button id="search">search</button>
+    </div>
+
+
+
+   
+    <div class="dropdown"> 
+        <div class="select">
+            <span class="selected">Filter by</span>
+            <div class="caret"></div>
+        </div>
+       <ul class="menu">
+       <li class="active">PC/Laptop</li>
+       <li>VR/headsets</li>
+       <li>Phones/Tablets</li>
+       <li>Camera/Sensors</li>
+       <li >PC Peripherals</li>
+       <li>Others</li>
+
+       </ul>
+
+       <button class="clear-filters-btn" onclick="clearFilters()">Clear Filters</button>
+
+    </div>
+
+   
+
+
+</div>
+
+
+
+<div class="Hardware Inventory">
+    <h1>User Inventory</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Device Name</th>
+                <th>Device Type</th>
+                <th>Quantity</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>OnOffsite</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Hardware in Hardware %}
+                <tr>
+                    <td>{{ Hardware.DeviceName }}</td>
+                    <td>{{ Hardware.DeviceType }}</td>
+                    <td>{{ Hardware.Quantity }}</td>
+                    <td>{{ Hardware.Location }}</td>
+                    <td>{{ Hardware.Status }}</td>
+                    <td>{{ Hardware.OnOffSite }}</td>
+                    <td class="book-button">
+                        <button>Book Item</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+ 
+
+</div>
+
+
+
+<style> 
+    @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+    
+    
+    /* DO NOT EDIT */
+    
+    body{
+        background-color: #162938;
+        color: oldlace;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        border: none;
+        outline: none;
+        font-family: Chakra Petch;   
+    }
+    
+    a {
+        text-decoration: none;
+    }
+     
+    nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: #aaaaaa;
+    padding: 20px;
+    color: oldlace;
+    }
+    
+    nav .navbar {
+     height: 100%;
+     max-width: 1440px;
+     margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+    
+    
+    nav .navbar .name a {
+        font-size: 25px;
+        font-weight: 500;
+        color: oldlace;
+    }
+    
+    nav .navbar .navlinks{
+        display: flex;
+        align-items: center;
+    }
+    
+    nav .navlinks li {
+        list-style: none;
+        margin: 0 8px;
+    }
+    
+    nav .navlinks a{
+        font-size: 14px;
+        font-weight: 500;
+        color: white;
+        padding: 10px 15px;  
+        transition: all 0.3s ease;
+    }
+    
+    nav .navlinks a:hover {
+      color: #979fa0;
+    }
+    
+    
+    /* DO NOT EDIT*/
+
+
+    h2 {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 150px;
+    }
+
+    .wrapper {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    #search-container { margin: 1em 0;}
+    input::placeholder{ color: white;}
+
+    #search-container input {
+        background-color: transparent;
+        width: 40%;
+        border-bottom: 2px solid white;
+        padding: 1em 0.3em;
+        color: white;
+    }
+
+    #search-container input:focus{
+         border-bottom-color: #2a2f3b;
+        transition: 0.5s;
+    }
+
+    #search-container button{
+        padding: 0.7em 1.1em;
+        margin-left: 1em;
+        background-color: #2a2f3b;
+        color: white;
+        border-radius: 5px;
+        margin-top: 0.5em;
+}
+
+
+/* Filter bar */
+.dropdown {
+    width: 10em;
+    position: 8em;
+    margin: 2.9em;  
+    margin-left: 0px; 
+}
+
+.dropdown * {
+    box-sizing: border-box;
+}
+
+.select {
+    background-color: #2a2f3b;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px #2a2f3b solid;
+    border-radius: 0.3em;
+    padding: 0.7em;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.select-clicked {
+    border: 2px white;
+    box-shadow: 0 0 0.8em #00008B;
+}
+
+.select:hover{
+    background: #323741;
+}
+.caret {
+    width: 10px;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-top: 6px solid #fff;
+    transition: 0,3s;
+}
+
+.caret-rotate {
+    transform: rotate(180deg);
+}
+
+.menu {
+    margin-top: 320px;
+    list-style: none;
+    padding: 0.2em 0.3em;
+    background: #323741;
+    border: 1px #363a43 solid;
+     box-shadow: 0 0.5em 1em rgba(0,0,0 0.2);
+     border-radius: 0.2em;
+     position: absolute;
+     top: 3em;
+     left: 10%;
+     width: 10em;
+     transform: translateX(-50%);
+     opacity: 0;
+     display: none;
+     transition: 0.7s;
+     z-index: 1;
+}
+
+.menu li {
+    padding: 0.7em 0.5em;
+    margin: 0.3 0;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.menu li:hover {
+    background: #2a2d35;
+}
+
+.active {
+    background: #23242a;
+}
+
+.menu-open {
+    display: block;
+    opacity: 1;
+}
+
+.clear-filters-btn {
+            display: none;
+            background-color: red;
+            color: white;
+            padding: 5px 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        
+}
+
+
+/* inventory table */
+
+
+table {
+   
+            border-collapse: collapse;
+            width: 100%;
+
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #aaaaaa;
+        }
+
+   
+        .book-button {
+            text-align: center;
+        }
+        .book-button button {
+            background-color: #2a2f3b; 
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    
+    
+    
+  
+    
+
+    
+    
+    
+    
+    
+    
+    
+    </style>
+
+
+<script> 
+
+//Dropdown filter
+
+const dropdowns = document.querySelectorAll('.dropdown');
+
+dropdowns.forEach(dropdown => {
+    const select = dropdown.querySelector('.select');
+    const caret = dropdown.querySelector('.caret');
+    const menu = dropdown.querySelector('.menu');
+    const options = dropdown.querySelectorAll('.menu li'); // Changed to querySelectorAll
+    const selected = dropdown.querySelector('.selected');
+
+    select.addEventListener('click', () => {
+        select.classList.toggle('select-clicked');
+        caret.classList.toggle('caret-rotate');
+        menu.classList.toggle('menu-open');
+    });
+
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            selected.innerText = option.innerText;
+            select.classList.remove('select-clicked');
+            caret.classList.remove('caret-rotate');
+            menu.classList.remove('menu-open');
+
+            options.forEach(option => { option.classList.remove('active')});
+            option.classList.add('active');
+        });
+    });
+});
+
+//
+
+
+
+
+
+//clear filters button
+
+
+const clearFiltersBtn = document.querySelector('.clear-filters-btn');               // clear filters button 
+
+
+const selectElement = document.querySelector('.selected');                         // Get select element
+
+
+const filterItems = document.querySelectorAll('.menu li');                         // Get all filter items
+
+
+function showClearFiltersButton() { 
+    clearFiltersBtn.style.display = 'block';                                      // Function to show the clear filters button
+}
+
+
+
+function hideClearFiltersButton() {
+    clearFiltersBtn.style.display = 'none';                                      // hide the clear filters button
+}
+
+
+// Function to reset selection back to "Filter by"
+function resetSelection() {
+    selectElement.textContent = 'Filter by';                                      // return selection back to Filter by
+}
+
+
+
+
+filterItems.forEach(filterItem => {
+    filterItem.addEventListener('click', function() {                            // Add click event listener to each filter 
+        showClearFiltersButton();
+        selectElement.textContent = this.textContent;
+    });
+});
+
+
+function clearFilters() {
+    resetSelection();
+    hideClearFiltersButton();                                                // hide button once returned to filter by
+}
+
+
+// filter 
+
+
+
+
+
+
+
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+</body>
+</html>

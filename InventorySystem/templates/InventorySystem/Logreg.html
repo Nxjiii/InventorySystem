@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="author" content="Group Project"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> login </title>
+        <title> Login </title>
     </head>
     <body>
 
@@ -18,57 +18,57 @@
         <div class="name">
             <a href="https://www.westminster.ac.uk/">University of Westminster</a>
         </div>
-               
         
-   
+        
         <ul class="navlinks">
 
-           <li><a href="Help.html">Help</a></li>    
+        <li><a href="Help.html">Help</a></li>    
 
         </ul>  
     </div>   
 </nav>       
 </div>
 
-
-
-
 <div class="wrapper">
+
+<form method="post" action="{%url 'Login'%}">
+    {% csrf_token %}
     <!--LOGIN PAGE--> 
     <div class="form-box-login">
         <h3>Login</h3>
         <form action="#">
         <div class="input-box">
             <span class="icon"><ion-icon name="mail"></ion-icon></span>
-            <input type="email" required>
+            <input type="text" name="username" required>
             <label>Email</label>
         </div>
 
         <!--Password-->
         <div class="input-box">
             <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-            <input type="password" required>
+            <input type="password" name="password" required>
             <label>Password</label>
         </div>
 
         <div class="remfor">
             <label><input type="checkbox">
-                 Remember me</label>
-                 <a href="#" >Forgot Password?</a>
+                Remember me</label>
+                <a href="#" >Forgot Password?</a>
         </div>
         <button type="submit" class="btn"> Login </button>
-         <div class="login-register">
-           <p>  Don't Have an account yet?<a href="#" class="register-link">Register</a></p> 
-         </div>
+        <div class="login-register">
+        <p>  Don't Have an account yet?<a href="#" class="register-link">Register</a></p> 
+        </div>
 
-        </form>
+        
     </div>
+    </form>
 
 
- 
 
-     <!--REGISTER PAGE--> 
-     <div class="form-box-register">
+    <!--REGISTER PAGE--> 
+    <form>
+    <div class="form-box-register">
         <h3>Register</h3>
         <form action="#">
 
@@ -95,17 +95,17 @@
 
         <div class="remfor">
             <label><input type="checkbox">
-                 I Agree to the terms & conditions</label>
-               
+            I Agree to the terms & conditions</label>
+
         </div>
         <button type="submit" class="btn"> Register </button>
-         <div class="login-register">
-           <p>  Already have an account?<a href="#" class="login-link">Login</a></p> 
-         </div>
+        <div class="login-register">
+        <p>  Already have an account?<a href="#" class="login-link">Login</a></p> 
+        </div>
 
-        </form>
+        
     </div>
-
+</form>
 </div>
 <style> 
     @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
@@ -115,7 +115,7 @@
     
     body{
         background-color: #162938;
-       
+    
     }
     
     * {
@@ -124,12 +124,12 @@
         box-sizing: border-box;
         font-family: Chakra Petch;   
     }
-   
-     
+
+
     a {
-        text-decoration: none;
+    text-decoration: none;
     }
-     
+    
     nav {
     position: fixed;
     left: 0;
@@ -140,9 +140,9 @@
     }
     
     nav .navbar {
-     height: 100%;
-     max-width: 1440px;
-     margin: auto;
+    height: 100%;
+    max-width: 1440px;
+    margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -174,12 +174,12 @@
     }
     
     nav .navlinks a:hover {
-      color: #979fa0;
+    color: #979fa0;
     }
     
     /* DO NOT EDIT BETWEEN THESE COMMENTS*/
 
-   
+
 
 
 
@@ -195,9 +195,9 @@
         border-radius: 20px;    
         display: flex;
         justify-content: center;
-       align-items: center;
-       transition: 0.2s ease ;
-       overflow: hidden;
+    align-items: center;
+    transition: 0.2s ease ;
+    overflow: hidden;
     }
 
     .wrapper.active {
@@ -211,13 +211,13 @@
 
     .wrapper .form-box-login{
         transition: transform .18s ease;
-     transform: translateX(0);  
+    transform: translateX(0);  
     }
 
     .wrapper.active .form-box-login{
         transition: none;
         transform: translateX(-400px) ;
-      
+    
     }
 
     .wrapper .form-box-register{
@@ -228,9 +228,9 @@
 
     .wrapper.active .form-box-register{
         transition: transform .18s ease;
-     transform: translateX(0);  
+    transform: translateX(0);  
     }
-  
+
     .form-box-login h3 {
         font-size: 2em;
         text-align: center;
@@ -316,24 +316,24 @@
             font-weight: 500;
         }
 
-      .login-register {
+    .login-register {
         font-size: 0.9em;
         text-align: center;
         font-weight: 500;
         margin: 25px 0 10px;
-      }
-      .login-register p a {
+    }
+    .login-register p a {
         color: #162938;
         text-decoration: none;
         font-weight: 600;
         
-      }
+    }
 
-      .login-register p a:hover {
-        text-decoration: underline;
-      }
+    .login-register p a:hover {
+    text-decoration: underline;
+    }
 
-     
+    
     </style>
 
 

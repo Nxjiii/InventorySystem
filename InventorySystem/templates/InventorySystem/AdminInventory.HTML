@@ -1,55 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta charset="UTF-8">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            position: relative; /* Added */
-        }
-        nav {
-            background-color: #333;
-            overflow: hidden;
-        }
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        nav li {
-            float: left;
-        }
-        nav li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        nav li a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
+    <title>Admin Inventory</title>
+</head>
+<body>
+
+    <div class="header" id="header">
+        <form method="POST" action="{% url 'AdminLogout' %}">
+            {% csrf_token %}
+            <button type="submit" class="logoutbutton">Logout</button>
+        </form>  
+    <h1>Admin Inventory</h1>
+    <img src="https://archinect.imgix.net/uploads/gi/gihgs0yt1s2dp5t3.png?fit=crop&auto=compress%2Cformat&w=300" class="imglogo" alt="Admin Icon">
+    </div>
+    
+    <div class="contentWrapper">
+    {%include 'InventorySystem/AdminNavbar.html'%}
+    <form id="inventory_id">
+    {% csrf_token %}
+        
+    <div class="search-filter-container">
+        <h2>Inventory</h2> <!-- Adjusted inventory title -->
+        <input type="text" class="search-input" placeholder="Search..." id="search-input"> <!-- Added id for search input -->
+        <select class="filter-select" id="filter-type">
+            <option value="">Filter by Device Type</option>
+            <option value="Laptop">Laptop</option>
+            <option value="Mobile Device">Mobile Device</option>
+            <option value="Standalone Headset">Standalone Headset</option>
+            <option value="Non-Portable PC">Non-Portable PC</option>
+        </select>
+        <button onclick="searchInventory()">Search</button> <!-- Added onclick event -->
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th> <!-- Add this th for row numbers -->
+                <th>Device Name</th>
+                <th>Device Type</th>
+                <th>Device Serial (Internal ID)</th>
+                <th>CPU</th>
+                <th>GPU</th>
+                <th>RAM</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="inventory-body">
+            {% for item in items %}
+            <tr>
+                <td>{{ forloop.counter }}</td> <!-- Use forloop.counter to display row numbers -->
+                <td>{{ item.DeviceName }}</td>
+                <td>{{ item.DeviceType }}</td>
+                <td>{{ item.DeviceSerial }}</td>
+                <td>{{ item.CPU }}</td>
+                <td>{{ item.GPU }}</td>
+                <td>{{ item.RAM }}</td>
+                <td><input type="number" value="{{ item.Quantity }}" min="1"></td>
+                <td class="{% if item.Status == 'Available' %}status-available{% elif item.Status == 'Booked' %}status-booked{% else %}status-out-of-stock{% endif %}">{{ item.Status }}</td>
+                <td><button class="remove-button" onclick="removeRow(this)">Remove</button></td>
+            </tr>
+            {% endfor %}
+        </body>
+    </table>
+    </div>
+    </form>
+    <div class="button-container">
+        <button class="add-button" onclick="addRow()">Add Row</button>
+    </div>
+    
+
+
+
+
+    <style> 
+        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+        
+
         .button-container {
             margin-top: 20px;
         }
+
         .add-button, .remove-button {
             padding: 8px 16px;
             background-color: #4CAF50;
@@ -58,10 +91,11 @@
             cursor: pointer;
             margin-right: 10px;
         }
+
         .remove-button {
             background-color: #f44336;
         }
-        /* Additional styles for search and filter */
+        
         .search-filter-container {
             margin-bottom: 20px;
             display: flex;
@@ -84,158 +118,17 @@
         .status-out-of-stock {
             color: red;
         }
-        .logout-button { /* Adjusted logout button */
-            position: absolute;
-            top: 0;
-            right: 0;
-            padding: 14px 16px;
-            color: white;
-            background-color: #333;
-            border: none;
-            cursor: pointer;
-        }
-        .imglogo { /* Adjusted image */
-            position: absolute;
-            top: 0;
-            right: 0;
-            margin-top: 10px; /* Added margin */
-            margin-right: 10px; /* Added margin */
-            width: 100px; /* Adjusted width */
-            height: auto;
-        }
-    </style>
-</head>
-<body>
 
-<<<<<<< Updated upstream
-<nav>
-    <ul>
-        <li><a href="AdminHomepage.html">Homepage</a></li>
-        <li><a href="AdminInventory.HTML">Inventory</a></li>
-        <li><a href="AdminProfile.HTML">Profile</a></li>
-        <li><a href="AdminManage.HTML">Manage</a></li>
-        <li><a href="AdminBookings.HTML">Bookings</a></li>
-        <li><a href="http://127.0.0.1:8000/">Logout</a></li>    
-    </ul>
-    <a href="http://127.0.0.1:8000/" class="logout-button">Logout</a> <!-- Moved logout button -->
-</nav>
-=======
-    <div class="header" id="header">
-        <button class="logoutbutton">Logout</button>   
-    <h1>Admin Inventory</h1>
-    <img src="https://archinect.imgix.net/uploads/gi/gihgs0yt1s2dp5t3.png?fit=crop&auto=compress%2Cformat&w=300" class="imglogo" alt="Admin Icon">
-    </div>
-    
->>>>>>> Stashed changes
+        h2 {
+            margin-right: 20px;
+        } 
 
-<div class="search-filter-container">
-    <h2 style="margin-right: 20px;">Inventory</h2> <!-- Adjusted inventory title -->
-    <input type="text" class="search-input" placeholder="Search..." id="search-input"> <!-- Added id for search input -->
-    <select class="filter-select" id="filter-type">
-        <option value="">Filter by Device Type</option>
-        <option value="Laptop">Laptop</option>
-        <option value="Mobile Device">Mobile Device</option>
-        <option value="Standalone Headset">Standalone Headset</option>
-        <option value="Non-Portable PC">Non-Portable PC</option>
-    </select>
-    <button onclick="searchInventory()">Search</button> <!-- Added onclick event -->
-</div>
-
-<table>
-    <thead>
-        <tr>
-            <th>#</th> <!-- Add this th for row numbers -->
-            <th>Device Name</th>
-            <th>Device Type</th>
-            <th>Device Serial (Internal ID)</th>
-            <th>CPU</th>
-            <th>GPU</th>
-            <th>RAM</th>
-            <th>Amount</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody id="inventory-body">
-        {% for item in items %}
-        <tr>
-            <td>{{ forloop.counter }}</td> <!-- Use forloop.counter to display row numbers -->
-            <td>{{ item.DeviceName }}</td>
-            <td>{{ item.DeviceType }}</td>
-            <td>{{ item.DeviceSerial }}</td>
-            <td>{{ item.CPU }}</td>
-            <td>{{ item.GPU }}</td>
-            <td>{{ item.RAM }}</td>
-            <td><input type="number" value="{{ item.Quantity }}" min="1"></td>
-            <td class="{% if item.Status == 'Available' %}status-available{% elif item.Status == 'Booked' %}status-booked{% else %}status-out-of-stock{% endif %}">{{ item.Status }}</td>
-            <td><button class="remove-button" onclick="removeRow(this)">Remove</button></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<div class="button-container">
-    <button class="add-button" onclick="addRow()">Add Row</button>
-</div>
-
-<<<<<<< Updated upstream
-<img src="https://archinect.imgix.net/uploads/gi/gihgs0yt1s2dp5t3.png?fit=crop&auto=compress%2Cformat&w=300" class="imglogo" alt="Admin Icon"> <!-- Moved image -->
-
-<script>
-    function addRow() {
-        var newRow = `
-            <tr>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td><input type="number" value="1" min="1"></td>
-                <td class="status-available">Available</td>
-                <td><button class="remove-button" onclick="removeRow(this)">Remove</button></td>
-            </tr>
-        `;
-        document.getElementById("inventory-body").insertAdjacentHTML('beforeend', newRow);
-    }
-
-    function removeRow(button) {
-        var row = button.parentNode.parentNode;
-        row.remove();
-    }
-
-    function searchInventory() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("search-input");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("inventory-body");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1]; // Change index to match the column you want to search (1 for Device Name)
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }       
-=======
-    <style> 
-        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
-        
-        
         body{
             background-color: #162938;
             color: white;
         
->>>>>>> Stashed changes
         }
-    }
-</script>
 
-<<<<<<< Updated upstream
-=======
         .logoutbutton {
             position: absolute;
             right: 0;
@@ -287,36 +180,6 @@
         }
         
         
-        nav {
-        position: align;
-        left: 0;
-        top: 150px;
-        width: 100%;
-        background-color: #00000;
-        padding: 70px;
-        text-transform: uppercase;
-        font-size: 60px;
-        background-color: #55717b;
-        }
-        
-        .navbar a{
-            color: #ffffff; 
-        }
-
-        
-        
-        
-        #navbar {
-            margin: 100px;
-            padding: 150px;
-            height: 100%;
-            max-width: 500px;
-            margin-right: auto; 
-            border: 4px solid #ffffff; 
-            border-radius: 15px;
-            justify-content: center;
-            box-shadow: 0px 40px 50px 25px rgba(0, 0, 0, 0.5);
-        }
 
         
 
@@ -330,38 +193,11 @@
             
         }
             
-            .navlinks {
-                display: flex;
-                flex-direction: column;
-                justify-content: left;
-                align-items: left;
-            }
-        
-            function removeRow(button) {
-                var row = button.parentNode.parentNode;
-                row.remove();
-            }
-        
-        nav .navlinks a:hover {
-            position: relative;
-            transition: 0.7s ease-in-out;
-            font-size: 1.2em;
-            color: #979fa0;
-        }
-
-
-
-        nav .name a:hover {
-            position: relative;
-            transition: 0.7s ease-in-out;
-            font-size: 1.2em;
-            color: #979fa0;
-        }
 
         .imglogo {
             order: 1;
             display: position;
-            margin-left: 165px;
+            margin-left: 75px;
             margin-right: auto;
             margin-top: 25px;
             width: 12%;
@@ -377,18 +213,93 @@
             justify-content: center;
             align-items: center;
             padding: 30px;
-            background-color: #55717b;
-            border: 4px solid #808080;
+            border: 4px solid #334d4d;
             box-shadow: 0px 0px 40px 10px rgba(0, 0, 0, 0.5);
             background-image: url('https://t4.ftcdn.net/jpg/03/27/60/29/240_F_327602922_jvM2SAJgZZPqFoki8xgipClneRmLkxeJ.jpg');
             background-size: cover; 
             background-position: right; 
             
             }
-    
 
+            #inventoryid{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 30px;
+                width: 100%;
+                font-size: 30px;
+                background-color: #55717b;
+                border: 4px solid #808080;
+                box-shadow: 0px 0px 40px 10px rgba(0, 0, 0, 0.5);
+                background-position: right; 
+                
+                }
+    
+            .contentWrapper {
+                display: flex;
+                align-items: start;
+                justify-content: start;
+                gap: 20px;
+                padding: 30px;
+                width: 100%;
+    
+            }
+    
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+    
+            td, th {
+                padding: 8px;
+                text-align: left;
+                font-size: 25px;
+            }
         
         </style>
->>>>>>> Stashed changes
+
+        <script>
+            function addRow() {
+                var newRow = `
+                    <tr>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                        <td><input type="number" value="1" min="1"></td>
+                        <td class="status-available">Available</td>
+                        <td><button class="remove-button" onclick="removeRow(this)">Remove</button></td>
+                    </tr>
+                `;
+                document.getElementById("inventory-body").insertAdjacentHTML('beforeend', newRow);
+            }
+        
+            function removeRow(button) {
+                var row = button.parentNode.parentNode;
+                row.remove();
+            }
+        
+            function searchInventory() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("search-input");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("inventory-body");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[1]; // Change index to match the column you want to search (1 for Device Name)
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }       
+                }
+            }
+        </script>       
 </body>
 </html>

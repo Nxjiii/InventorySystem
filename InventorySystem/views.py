@@ -1,5 +1,8 @@
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from .models import *
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
@@ -17,20 +20,52 @@ def AdminInventory(request):
 def LoginRegister(request):
     return render(request, 'InventorySystem/Logreg.HTML')
 
-def User(request):
-    return render(request, 'InventorySystem/UserTemplate.HTML')
+def Login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        print(user)
+        if user:
+            login(request, user)
+            return redirect('AdminManage')
+        else:
+            return render(request, 'InventorySystem/Logreg.HTML', {'error': 'Invalid email or password'})
 
-def AdminHomepage(request):
-    return render(request, 'InventorySystem/AdminHomepage.HTML')
+def AdminLogout(request):
+    return redirect('LoginRegister')
+
+def AdminUser(request):
+    users = User.objects.all()
+    print('users', users)
+    return render(request, 'InventorySystem/AdminUser.HTML', {'users': users})
+
+def delete_user(request):
+    
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        print('user_id', user_id)
+        try:
+            user = User.objects.get(id=user_id)
+            user.delete() 
+        except ObjectDoesNotExist:
+            print(f"No user with ID {user_id} exists.") 
+        return redirect('AdminUser')
+    else: 
+        return redirect('AdminUser')
 
 
 def AdminManage(request):
     bookings = Hire_Reference.objects.all()
-    if request.method == 'POST':
-        if 'booking_delete' in request.POST:
-            booking_id = request.POST['booking_delete']
-            Hire_Reference.objects.filter(id=booking_id).delete()
     return render(request, 'InventorySystem/AdminManage.HTML', {'bookings': bookings})
+
+def delete_booking(request):
+    
+    if request.method == 'POST':
+        booking_id = request.POST.get('booking_id')
+        booking = Hire_Reference.objects.get(id=booking_id)
+        booking.delete()  
+        return redirect('AdminManage')
 
 def AdminReport(request):
     bookings = Hire_Reference.objects.all()
@@ -38,7 +73,6 @@ def AdminReport(request):
 
 def AdminBookings(request):
     return render(request, 'InventorySystem/AdminBookings.HTML')
-
 
 
 def UserInventory(request):

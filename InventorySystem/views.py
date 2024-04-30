@@ -8,7 +8,7 @@ APP_NAME = 'InventorySystem/'
 
 
 def AdminInventory(request):
-   
+
     items = Electronic_Hardware.objects.all()
 
     return render(request, 'InventorySystem/AdminInventory.HTML', {'items': items})
@@ -36,7 +36,6 @@ def AdminReport(request):
     bookings = Hire_Reference.objects.all()
     return render(request, 'InventorySystem/AdminReport.HTML', {'bookings': bookings})
 
-<<<<<<< Updated upstream
 def AdminBookings(request):
     return render(request, 'InventorySystem/AdminBookings.HTML')
 
@@ -59,5 +58,3 @@ def UserInventory(request):
 
     return render(request, 'InventorySystem/UserInventory.HTML', {'electronics': electronic_items, 'Hardware': hardware_items, 'selected_device_type': device_type})
 
-=======
->>>>>>> Stashed changes

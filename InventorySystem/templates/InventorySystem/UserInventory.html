@@ -95,11 +95,23 @@
                     <td>{{ Hardware.Location }}</td>
                     <td>{{ Hardware.Status }}</td>
                     <td>{{ Hardware.OnOffSite }}</td>
-                    <td class="book-button">
-                        <button>Book Item</button>
+                    <td class="book-button"><button>Book Item</button>
                     </td>
                 </tr>
             {% endfor %}
+
+            {% for Electronic in Electronic %}
+            <tr>
+                <td class="Filtered">{{ Electronic.DeviceName }}</td>
+                <td>{{ Electronic.DeviceType }}</td>
+                <td>{{ Electronic.Quantity }}</td>
+                <td>{{ Electronic.Location }}</td>
+                <td>{{ Electronic.Status }}</td>
+                <td>{{ Electronic.OnOffSite }}</td>
+                <td class="book-button"><button>Book Item</button>
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
  
@@ -482,6 +494,8 @@ function clearFilters() {
 
 
 //filter not working yet
+
+
 $(document).ready(function() {
     $('.menu li').on('click', function() {
         var deviceName = $(this).text(); 
@@ -509,13 +523,30 @@ $(document).ready(function() {
 
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    var bookButtons = document.querySelectorAll('.book-button');
+
+    bookButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var deviceName = button.parentNode.parentNode.querySelector('.Filtered').textContent;
+            if (confirm('Are you sure you want to book ' + deviceName + '?')) {
+                alert('Booking confirmed for ' + deviceName);
+            } else {
+                alert('Booking cancelled');
+            }
+        });
+    });
+});
+
+
+
+
+
+
 
 
 
 </script>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 

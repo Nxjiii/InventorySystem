@@ -2,13 +2,13 @@
 <html lang="en">
 <meta charset="UTF-8">
 <head>
-    <title>Admin Bookings</title>
+    <title>Admin Report</title>
 </head>
 <body>
 
     <div class="header" id="header">
         <button class="logoutbutton">Logout</button>   
-    <h1>Admin Bookings</h1>
+    <h1>Admin Report</h1>
     <img src="https://archinect.imgix.net/uploads/gi/gihgs0yt1s2dp5t3.png?fit=crop&auto=compress%2Cformat&w=300" class="imglogo" alt="Admin Icon">
     </div>
     
@@ -21,10 +21,30 @@
             <li><a href="AdminInventory.HTML">Inventory</a></li>
             <li><a href="AdminProfile.HTML"> Profile</a></li>
             <li><a href="AdminManage.HTML">Manage</a></li>
-            <li><a href="AdminBookings.HTML">Bookings</a></li>
+            <li><a href="AdminReport.HTML">Report</a></li>
         </ul>
     </nav>
     
+    <form action="/view_booking" method="POST">
+        <table>
+            <tr>
+                <th>Booking ID</th>
+                <th>Customer ID</th>
+                <th>Hire Start Date</th>
+                <th>Hire End Date</th>
+                <th>Hardware ID</th>
+            </tr>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.UserID }}</td>
+                <td>{{ booking.Hire_StartDate }}</td>
+                <td>{{ booking.Hire_EndDate }}</td>
+                <td>{{ booking.Hardware_ID }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
     
 
     <style> 

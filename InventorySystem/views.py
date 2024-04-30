@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Hardware, Electronic_Hardware
+from .models import *
 
 
 
@@ -25,8 +25,18 @@ def AdminHomepage(request):
 
 
 def AdminManage(request):
-    return render(request, 'InventorySystem/AdminManage.HTML')
+    bookings = Hire_Reference.objects.all()
+    if request.method == 'POST':
+        if 'booking_delete' in request.POST:
+            booking_id = request.POST['booking_delete']
+            Hire_Reference.objects.filter(id=booking_id).delete()
+    return render(request, 'InventorySystem/AdminManage.HTML', {'bookings': bookings})
 
+def AdminReport(request):
+    bookings = Hire_Reference.objects.all()
+    return render(request, 'InventorySystem/AdminReport.HTML', {'bookings': bookings})
+
+<<<<<<< Updated upstream
 def AdminBookings(request):
     return render(request, 'InventorySystem/AdminBookings.HTML')
 
@@ -49,3 +59,5 @@ def UserInventory(request):
 
     return render(request, 'InventorySystem/UserInventory.HTML', {'electronics': electronic_items, 'Hardware': hardware_items, 'selected_device_type': device_type})
 
+=======
+>>>>>>> Stashed changes

@@ -12,7 +12,7 @@
     <img src="https://archinect.imgix.net/uploads/gi/gihgs0yt1s2dp5t3.png?fit=crop&auto=compress%2Cformat&w=300" class="imglogo" alt="Admin Icon">
     </div>
     
-
+    
     <nav class="navbar" id="navbar">
         <div class="name">
             <a href="AdminHomepage.html">Homepage</a>
@@ -25,7 +25,34 @@
         </ul>
     </nav>
     
+    <form action="/adminman" method="POST">
+        <table>
+            <tr>
+                <th>Booking ID</th>
+                <th>Customer ID</th>
+                <th>Hire Start Date</th>
+                <th>Hire End Date</th>
+                <th>Hardware ID</th>
+                <th>Status</th>
+            </tr>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.UserID }}</td>
+                <td>{{ booking.Hire_StartDate }}</td>
+                <td>{{ booking.Hire_EndDate }}</td>
+                <td>{{ booking.Hardware_ID }}</td>
+                <td>{{ booking.Status }}</td>
+                <td>
+                    <button type="submit" name="booking_confirm" value="{{ booking.booking_id }}" class="confirm-button">Confirm</button>
+                    <button type="submit" name="booking_reject" value="{{ booking.booking_id }}" class="cancel-button">Cancel</button>
+                    <button type="submit" name="booking_delete" value="{{ booking.booking_id }}" class="delete-button">Delete</button>
     
+                </td>
+            </tr>
+        
+            {% endfor %}
+        </table>
 
     <style> 
         @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
@@ -53,7 +80,7 @@
             text-shadow: 2px 5px 4px #000000;
             transition: font-size 0.5s ease;
         }
-
+        
         .logoutbutton:hover {
             font-size: 45px;
         }

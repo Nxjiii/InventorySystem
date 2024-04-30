@@ -21,6 +21,7 @@ class Hire_Reference(models.Model):
     UserID = models.CharField(max_length=100)
     AdminID = models.CharField(max_length=100)
     HardwareID = models.CharField(max_length=100)
+    Status = models.CharField(max_length=100, default='Status')
 
 class Hardware(models.Model):
     HardwareID = models.IntegerField()

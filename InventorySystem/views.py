@@ -9,6 +9,10 @@ from django.core.exceptions import ObjectDoesNotExist
 
 APP_NAME = 'InventorySystem/'
 
+def profile(request):
+    return render(request, 'InventorySystem/profile.HTML')
+
+
 
 def AdminInventory(request):
 

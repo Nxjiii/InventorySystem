@@ -25,6 +25,7 @@ urlpatterns = [
     path('adminhp/', views.AdminHomepage , name='AdminHomepage'),
     path('admininv/', views.AdminInventory , name='AdminInventory'),
     path('adminman/', views.AdminManage , name='AdminManage'),
-    path('adminbook/', views.AdminBookings , name='AdminBookings')
+    path('adminbook/', views.AdminBookings , name='AdminBookings'),
+    path('Inventory/', views.UserInventory , name='UserInventory')
 ]
 

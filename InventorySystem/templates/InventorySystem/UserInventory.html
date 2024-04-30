@@ -37,8 +37,8 @@
 
 
     <div id="search-container">
-        <input type="search" id="search-output" placeholder="Browse Inventory">
-        <button id="search">search</button>
+        <input type="text" id="search-output" placeholder="Browse Inventory">
+        <button id="search" onclick="searchInventory()">search</button>
     </div>
 
 
@@ -51,10 +51,13 @@
         </div>
        <ul class="menu">
        <li class="active">PC/Laptop</li>
-       <li>VR/headsets</li>
-       <li>Phones/Tablets</li>
+       <li>VR Headset</li>
+       <li >VR Controller</li>
+       <li >Tripod</li>
+       <li >Power/Cable</li>
        <li>Camera/Sensors</li>
        <li >PC Peripherals</li>
+       <li >Phones/tablets</li>
        <li>Others</li>
 
        </ul>
@@ -70,7 +73,7 @@
 
 
 
-<div class="Hardware Inventory">
+<div class="Inventory">
     <h1>User Inventory</h1>
     <table>
         <thead>
@@ -86,7 +89,7 @@
         <tbody>
             {% for Hardware in Hardware %}
                 <tr>
-                    <td>{{ Hardware.DeviceName }}</td>
+                    <td class="Filtered">{{ Hardware.DeviceName }}</td>
                     <td>{{ Hardware.DeviceType }}</td>
                     <td>{{ Hardware.Quantity }}</td>
                     <td>{{ Hardware.Location }}</td>
@@ -219,6 +222,7 @@
         color: white;
         border-radius: 5px;
         margin-top: 0.5em;
+        cursor: pointer;
 }
 
 
@@ -369,7 +373,7 @@ table {
     
     </style>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script> 
 
 //Dropdown filter
@@ -380,7 +384,7 @@ dropdowns.forEach(dropdown => {
     const select = dropdown.querySelector('.select');
     const caret = dropdown.querySelector('.caret');
     const menu = dropdown.querySelector('.menu');
-    const options = dropdown.querySelectorAll('.menu li'); // Changed to querySelectorAll
+    const options = dropdown.querySelectorAll('.menu li'); 
     const selected = dropdown.querySelector('.selected');
 
     select.addEventListener('click', () => {
@@ -411,49 +415,96 @@ dropdowns.forEach(dropdown => {
 //clear filters button
 
 
-const clearFiltersBtn = document.querySelector('.clear-filters-btn');               // clear filters button 
+const clearFiltersBtn = document.querySelector('.clear-filters-btn');               
 
 
-const selectElement = document.querySelector('.selected');                         // Get select element
+const selectElement = document.querySelector('.selected');                       
 
 
-const filterItems = document.querySelectorAll('.menu li');                         // Get all filter items
+const filterItems = document.querySelectorAll('.menu li');                         
 
 
 function showClearFiltersButton() { 
-    clearFiltersBtn.style.display = 'block';                                      // Function to show the clear filters button
+    clearFiltersBtn.style.display = 'block';                                      
 }
 
 
 
 function hideClearFiltersButton() {
-    clearFiltersBtn.style.display = 'none';                                      // hide the clear filters button
+    clearFiltersBtn.style.display = 'none';                                     
 }
 
 
-// Function to reset selection back to "Filter by"
+
 function resetSelection() {
-    selectElement.textContent = 'Filter by';                                      // return selection back to Filter by
+    selectElement.textContent = 'Filter by';                                     
 }
 
 
 
 
 filterItems.forEach(filterItem => {
-    filterItem.addEventListener('click', function() {                            // Add click event listener to each filter 
+    filterItem.addEventListener('click', function() {  
         showClearFiltersButton();
         selectElement.textContent = this.textContent;
+
+     
+        });
     });
-});
+
 
 
 function clearFilters() {
     resetSelection();
-    hideClearFiltersButton();                                                // hide button once returned to filter by
+    hideClearFiltersButton();                                           
 }
 
 
-// filter 
+ // Search functionality
+ $('#search-output').on('keyup', function() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = this.value.toUpperCase();
+        table = $('.Inventory table');
+        tr = table.find('tr');
+
+        tr.each(function() {
+            td = $(this).find('td')[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(input) > -1) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            }
+        });
+    });
+
+
+//filter not working yet
+$(document).ready(function() {
+    $('.menu li').on('click', function() {
+        var deviceName = $(this).text(); 
+        $('.Filtered').each(function() {
+            var row = $(this).closest('tr');
+            var cellText = $(this).text();
+            if (deviceName === "Filter by" || cellText === deviceName) {
+                row.show(); 
+            } else {
+                if (row.is(":visible")) { 
+                }
+            }
+        });
+        $('.selected').text(deviceName); 
+    });
+
+    
+    function clearFilters() {
+        $('.Filtered').closest('tr').show();
+        $('.selected').text('Filter by'); 
+    }
+});
+
 
 
 

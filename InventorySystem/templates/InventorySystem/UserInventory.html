@@ -95,7 +95,7 @@
                     <td>{{ Hardware.Location }}</td>
                     <td>{{ Hardware.Status }}</td>
                     <td>{{ Hardware.OnOffSite }}</td>
-                    <td class="book-button"><button>Book Item</button>
+                    <td class="book-button" data-device-name="{{ Hardware.DeviceName }}"><button>Book Item</button>
                     </td>
                 </tr>
             {% endfor %}
@@ -108,7 +108,7 @@
                 <td>{{ Electronic.Location }}</td>
                 <td>{{ Electronic.Status }}</td>
                 <td>{{ Electronic.OnOffSite }}</td>
-                <td class="book-button"><button>Book Item</button>
+                <td class="book-button" data-device-name="{{ Electronic.DeviceName }}"><button>Book Item</button>
                 </td>
             </tr>
         {% endfor %}
@@ -520,23 +520,50 @@ $(document).ready(function() {
 });
 
 
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     var bookButtons = document.querySelectorAll('.book-button');
 
     bookButtons.forEach(function(button) {
         button.addEventListener('click', function() {
-            var deviceName = button.parentNode.parentNode.querySelector('.Filtered').textContent;
-            if (confirm('Are you sure you want to book ' + deviceName + '?')) {
-                alert('Booking confirmed for ' + deviceName);
+            var deviceName = button.getAttribute('data-device-name');
+            if (confirm('Do you want to request booking for ' + deviceName + '?')) {
+                // Send AJAX request to adminman/ with the device name
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/adminman/', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            alert('Booking request sent successfully!');
+                        } else {
+                            alert('Error: ' + xhr.status);
+                        }
+                    }
+                };
+                xhr.send(JSON.stringify({ 'device_name': deviceName }));
             } else {
-                alert('Booking cancelled');
+                alert('Booking request cancelled');
             }
         });
     });
 });
+
+// Function to get CSRF token from cookie
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 
 

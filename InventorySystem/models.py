@@ -1,4 +1,7 @@
 from django.db import models
+from django.utils import timezone
+
+
 class User(models.Model):
     UserID = models.CharField(max_length=100)
     FirstName = models.CharField(max_length=100)
@@ -15,13 +18,17 @@ class User_Admin(models.Model):
 
 class Hire_Reference(models.Model):
     RefID = models.IntegerField()
-    Cost = models.FloatField(max_length=20)
-    Hire_StartDate = models.DateField(max_length=20)
-    Hire_EndDate = models.DateField(max_length=20)
-    UserID = models.CharField(max_length=100)
-    AdminID = models.CharField(max_length=100)
+    Hire_StartDate = models.DateField(default=timezone.now)  # Set default to current date
+    Hire_EndDate = models.DateField()  # End date will be calculated automatically
+    Username = models.CharField(max_length=100)
+    AdminUsername = models.CharField(max_length=100)
     HardwareID = models.CharField(max_length=100)
     Status = models.CharField(max_length=100, default='Status')
+
+    def save(self, *args, **kwargs):
+        # Automatically calculate Hire_EndDate as 20 days after Hire_StartDate
+        self.Hire_EndDate = self.Hire_StartDate + timezone.timedelta(days=20)
+        super().save(*args, **kwargs)
 
 class Hardware(models.Model):
     HardwareID = models.IntegerField()

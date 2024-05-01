@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class User(models.Model):
@@ -16,19 +17,40 @@ class User_Admin(models.Model):
     Phone = models.IntegerField()
     Role = models.CharField(max_length=100)
 
+
+
+
+
+
+def default_hire_end_date():
+    return timezone.now() + timezone.timedelta(days=20)
+
 class Hire_Reference(models.Model):
-    RefID = models.IntegerField()
-    Hire_StartDate = models.DateField(default=timezone.now)  # Set default to current date
-    Hire_EndDate = models.DateField()  # End date will be calculated automatically
+    Hire_StartDate = models.DateField(default=timezone.now)  
+    Hire_EndDate = models.DateField(default=default_hire_end_date) 
     Username = models.CharField(max_length=100)
-    AdminUsername = models.CharField(max_length=100)
+    DeviceName = models.CharField(max_length=100)
     HardwareID = models.CharField(max_length=100)
-    Status = models.CharField(max_length=100, default='Status')
+    Status = models.CharField(max_length=100, default='Booked')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        # Automatically calculate Hire_EndDate as 20 days after Hire_StartDate
-        self.Hire_EndDate = self.Hire_StartDate + timezone.timedelta(days=20)
-        super().save(*args, **kwargs)
+        if not self.pk and not self.user_id: 
+            self.user = User.objects.first()  
+
+    def __str__(self):
+        return f"{self.DeviceName} - {self.Hire_StartDate}"
+
+
+
+
+
+
+
+
+
+  
+
 
 class Hardware(models.Model):
     HardwareID = models.IntegerField()
@@ -41,7 +63,6 @@ class Hardware(models.Model):
     Warranty = models.CharField(max_length=100)
     Comments = models.TextField(null = True, max_length=1000)
     OnOffSite = models.CharField(null = True, max_length=100)
-    RefID = models.IntegerField()
 
 class NonElectronic_Hardware(models.Model):
     HardwareID = models.IntegerField()

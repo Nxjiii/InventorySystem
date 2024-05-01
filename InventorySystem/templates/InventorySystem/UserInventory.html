@@ -11,6 +11,9 @@
 
 
         <nav>
+
+
+        
             
 
     <div class="navbar">
@@ -19,14 +22,19 @@
         <div class="name">
             <a href="Homepage.html">Inventory</a>
         </div>
+
                
         
    
         <ul class="navlinks">
            <li><a href="Manage.html">Manage</a></li>
            <li><a href="Help.html">Help</a></li>  
-           <li><a href="Profile.html">Profile</a></li>  
-
+           <li><a href="{% url 'profile' %}">Profile</a></li>  
+         <li><form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>  
+        </form>
+    </li>
         </ul>  
     </div>   
 </nav>       
@@ -527,9 +535,11 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             var deviceName = button.getAttribute('data-device-name');
             if (confirm('Do you want to request booking for ' + deviceName + '?')) {
-                // Send AJAX request to adminman/ with the device name
+            
+                var url = '/create_booking/';
+ 
                 var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/adminman/', true);
+                xhr.open('POST', url, true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
                 xhr.onreadystatechange = function() {
@@ -549,7 +559,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Function to get CSRF token from cookie
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -564,6 +574,7 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
 
 
 

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
@@ -18,8 +18,52 @@ APP_NAME = 'InventorySystem/'
 
 @login_required
 def profile(request):
+   
     user = request.user
-    return render(request, 'InventorySystem/profile.html', {'user': user})
+    bookings = Hire_Reference.objects.filter(Username=user.username)
+    return render(request, 'InventorySystem/profile.html', {'user': user, 'bookings': bookings})
+
+
+
+def logoutview(request):
+    logout(request)  
+    return redirect('LoginRegister') 
+
+def create_booking(request):
+    if request.method == 'POST':
+        # Retrieve form data
+        device_name = request.POST.get('device_name')
+        hire_start_date = request.POST.get('hire_start_date')
+        hire_end_date = request.POST.get('hire_end_date')
+
+     
+        try:
+            booking = Hire_Reference.objects.create(
+                DeviceName=device_name,
+                Hire_StartDate=hire_start_date,
+                Hire_EndDate=hire_end_date,
+                user=request.user  
+            )
+      
+            return JsonResponse({'success': True})
+        except Exception as e:
+            
+            return JsonResponse({'success': False, 'error': str(e)})
+
+    
+    return redirect('profile/')
+
+ 
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -94,6 +94,14 @@
             color: #979fa0;
         }
         /* DO NOT EDIT BETWEEN THESE COMMENTS*/
+
+
+        .username{
+          margin-top: 120px;
+          text-align: center;
+          color: white;
+          font-size: 25px;
+        }
     </style>
 </head>
 <body>
@@ -113,9 +121,12 @@
 
    
 
-    
-                
-               
+<div class="username">    
+    {% if user.is_authenticated %}
+    <p>{{ user.username }}</p>
+{% else %}
+{% endif %}
+</div>       
 
    
 
@@ -149,47 +160,51 @@
         </table>
       </div>
 
-      <div class="container">
-        <h2>Current Bookings</h2>          
-        <table class="table table-bordered">
+     <div class="bookings">
+      <h2>Bookings</h2>
+      <table border="1">
           <thead>
-            <tr>
-              <th>Date Booked</th>
-              <th>Item Name</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
+              <tr>
+                  <th>Device Name</th>
+                  <th>Booking Start Date</th>
+                  <th>Booking End Date</th>
               </tr>
-            
           </thead>
-          
-          
-      
-        </table>
-      </div>
 
-
-      <div class="container">
-        <h2>Due Dates</h2>          
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Due date</th>
-              <th>Description</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
+              {% for booking in bookings %}
+              <tr>
+                  <td>{{ booking.DeviceName }}</td>
+                  <td>{{ booking.Hire_StartDate }}</td>
+                  <td>{{ booking.Hire_EndDate }}</td>
               </tr>
-            
-          </thead>
-          
-          
+              {% endfor %}
+    
+      </table>
+      </div>  
       
-        </table>
-      </div>
-      
+      <style>
+        /* profile.css */
+.bookings table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px; /* Add some space between the table and other content */
+}
+
+.bookings th, .bookings td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd; /* Add bottom border to each cell */
+}
+
+.bookings th {
+  background-color: #f2f2f2; /* Light gray background for table header */
+}
+
+.bookings tr:nth-child(even) {
+  background-color: #f2f2f2; /* Alternate row background color */
+}
+
+      </style>
 
 
 

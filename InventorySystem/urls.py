@@ -20,7 +20,6 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('profile/', views.profile, name='profile'),
     path('admin/', admin.site.urls),
     path('', views.LoginRegister , name='LoginRegister'),
     path('login/', views.Login , name='Login'),
@@ -30,10 +29,11 @@ urlpatterns = [
     path('admininv/', views.AdminInventory , name='AdminInventory'),
     path('adminman/', views.AdminManage , name='AdminManage'),
     path('delete_booking/', views.delete_booking , name='delete_booking'),
+    path('profile/', views.profile, name='profile'),
     path('adminreport/', views.AdminReport , name='AdminReport'),
     path('Inventory/', views.UserInventory , name='Inventory'),
     path('adminlogout/', auth_views.LogoutView.as_view(template_name='Logreg.html'), name='AdminLogout'),
     path('login/Inventory/', views.UserInventory , name='Inventory'),
-    path('login/adminman/', views.AdminManage , name='AdminManage')
+    path('login/adminman/', views.AdminManage , name='AdminManage'),
 ]
 

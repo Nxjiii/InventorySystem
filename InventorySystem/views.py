@@ -19,7 +19,7 @@ APP_NAME = 'InventorySystem/'
 @login_required
 def profile(request):
     user = request.user
-    return render(request, 'Profile.html', {'user': user})
+    return render(request, 'InventorySystem/profile.html', {'user': user})
 
 
 

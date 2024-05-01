@@ -36,6 +36,7 @@ urlpatterns = [
     path('login/Inventory/', views.UserInventory , name='Inventory'),
     path('login/adminman/', views.AdminManage , name='AdminManage'),
     path('logout/', views.logoutview, name='logout'),
-     path('create_booking/', views.create_booking, name='create_booking'),
+    path('create_booking/', views.create_booking, name='create_booking'),
+    path('userhp/', views.UserHomepage , name='UserHomepage'),
 ]
 

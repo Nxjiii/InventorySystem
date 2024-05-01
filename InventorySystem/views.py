@@ -65,6 +65,9 @@ def create_booking(request):
 
 
 
+def UserHomepage(request):
+    return render(request, 'InventorySystem/UserHomepage.HTML')
+
 
 
 

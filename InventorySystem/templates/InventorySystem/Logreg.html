@@ -31,6 +31,7 @@
 
 <div class="wrapper">
 
+   
 <form method="post" action="{%url 'Login'%}">
     {% csrf_token %}
     <!--LOGIN PAGE--> 
@@ -38,9 +39,9 @@
         <h3>Login</h3>
         <form action="#">
         <div class="input-box">
-            <span class="icon"><ion-icon name="mail"></ion-icon></span>
+            <span class="icon"><ion-icon name="person"></ion-icon></span>
             <input type="text" name="username" required>
-            <label>Email</label>
+            <label>Username</label>
         </div>
 
         <!--Password-->
@@ -103,10 +104,17 @@
         <p>  Already have an account?<a href="#" class="login-link">Login</a></p> 
         </div>
 
-        
+    
     </div>
 </form>
 </div>
+
+
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
+
 <style> 
     @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
     
@@ -181,7 +189,12 @@
 
 
 
+.error {
+    color: white;
+ text-align: center;
 
+
+}
 
 
     .wrapper {

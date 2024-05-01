@@ -31,7 +31,9 @@ urlpatterns = [
     path('adminman/', views.AdminManage , name='AdminManage'),
     path('delete_booking/', views.delete_booking , name='delete_booking'),
     path('adminreport/', views.AdminReport , name='AdminReport'),
-     path('Inventory/', views.UserInventory , name='Inventory'),
+    path('Inventory/', views.UserInventory , name='Inventory'),
     path('adminlogout/', auth_views.LogoutView.as_view(template_name='Logreg.html'), name='AdminLogout'),
+    path('login/Inventory/', views.UserInventory , name='Inventory'),
+    path('login/adminman/', views.AdminManage , name='AdminManage')
 ]
 

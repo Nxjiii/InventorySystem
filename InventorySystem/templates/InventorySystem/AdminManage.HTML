@@ -19,6 +19,12 @@
     <div class="contentWrapper">
     {%include 'InventorySystem/AdminNavbar.html'%}
 
+
+
+
+
+
+
     <form
     id="bookings_form"
     method="POST"
@@ -52,6 +58,51 @@
             {% endfor %}
         </table>
     </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Device Name</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.DeviceName }}</td>
+                <td>{{ booking.Status }}</td>
+                <td>
+                    {% if booking.Status == 'Requested' %}
+                    <form action="{% url 'confirm_booking' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="booking_id" value="{{ booking.id }}">
+                        <input type="text" name="username" placeholder="Enter Username">
+                        <input type="text" name="admin_username" placeholder="Enter Admin Username">
+                        <input type="submit" value="Confirm">
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     
     <style> 
         @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');

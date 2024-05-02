@@ -31,7 +31,7 @@ def logoutview(request):
 
 def create_booking(request):
     if request.method == 'POST':
-        # Retrieve form data
+       
         device_name = request.POST.get('device_name')
         hire_start_date = request.POST.get('hire_start_date')
         hire_end_date = request.POST.get('hire_end_date')
